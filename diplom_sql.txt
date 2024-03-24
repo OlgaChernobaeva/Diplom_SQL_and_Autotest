@@ -4,11 +4,22 @@
 Представь: тебе нужно проверить, отображается ли созданный заказ в базе данных. 
 Для этого: выведи список логинов курьеров с количеством их заказов в статусе «В доставке» (поле inDelivery = true).  
 
+Исправленный:
+scooter_rent=# SELECT c.login, COUNT(*) AS total_orders
+scooter_rent-# FROM "Orders" AS o
+scooter_rent-# RIGHT OUTER JOIN "Couriers" AS c ON c.id=o."courierId"
+scooter_rent-# WHERE "inDelivery"=true
+scooter_rent-# GROUP BY c.login;
+
+P.S. делаем приоритет на таблицу курьеров,т.к. по заданию нужно вывести всех курьеров и отобразить сколько у них статусов "В доставке", даже если таких статусов 0
+
+До исправления:
 scooter_rent=# SELECT c.login, COUNT(o.track) AS total_orders
 scooter_rent-# FROM "Couriers" AS c
 scooter_rent-# LEFT OUTER JOIN "Orders" AS o ON c.id=o."courierId"
 scooter_rent-# WHERE "inDelivery"=true
 scooter_rent-# GROUP BY c.login;
+
 
 
 Задание 2 
